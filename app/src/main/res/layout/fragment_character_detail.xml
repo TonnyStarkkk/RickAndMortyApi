@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.detail.CharacterDetailFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detailConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/headerRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="405dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/headerImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    tools:src="@drawable/ic_rick_sanchez" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/contentRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="370dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_material1"
+                    style="@style/CustomCardViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#272b33"
+                    android:paddingStart="40dp"
+                    android:paddingTop="30dp"
+                    app:cardElevation="30dp"
+                    tools:ignore="RtlSymmetry">
+
+                    <LinearLayout
+                        android:id="@+id/characterInfoLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:orientation="vertical"
+                        android:paddingStart="10dp">
+
+                        <TextView
+                            android:id="@+id/characterNameTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rick Sanchez"
+                            android:textColor="@color/white"
+                            android:textSize="26sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/characterStatusTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Alive - Human"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="normal" />
+
+                        <TextView
+                            android:id="@+id/characterGenderLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="Gender"
+                            android:textColor="@color/dark_white"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/characterGenderTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Male"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="normal" />
+
+                        <TextView
+                            android:id="@+id/lastKnownLocationLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Last known location:"
+                            android:textColor="@color/dark_white"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/lastKnownLocationTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Citadel of Ricks"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="normal" />
+
+                        <TextView
+                            android:id="@+id/firstSeenLocationLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="First known location"
+                            android:textColor="@color/dark_white"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/firstSeenLocationTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pilot"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="normal" />
+
+                        <LinearLayout
+                            android:id="@+id/expandableLayoutsContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <com.skydoves.expandablelayout.ExpandableLayout
+                                android:id="@+id/expandable1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/bg_expandable"
+                                android:padding="10dp"
+                                app:expandable_duration="300"
+                                app:expandable_isExpanded="false"
+                                app:expandable_parentLayout="@layout/expandable_parent"
+                                app:expandable_secondLayout="@layout/expandable_detail"
+                                app:expandable_showSpinner="true"
+                                app:expandable_spinner="@drawable/ic_arrow_down"
+                                app:expandable_spinner_animate="true"
+                                app:expandable_spinner_gravity="end"
+                                app:expandable_spinner_margin="14dp"
+                                app:expandable_spinner_size="32dp" />
+
+                            <com.skydoves.expandablelayout.ExpandableLayout
+                                android:id="@+id/expandable2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/bg_expandable"
+                                android:padding="10dp"
+                                app:expandable_duration="300"
+                                app:expandable_isExpanded="false"
+                                app:expandable_parentLayout="@layout/expandable_parent"
+                                app:expandable_secondLayout="@layout/expandable_detail"
+                                app:expandable_showSpinner="true"
+                                app:expandable_spinner="@drawable/ic_arrow_down"
+                                app:expandable_spinner_animate="true"
+                                app:expandable_spinner_gravity="end"
+                                app:expandable_spinner_margin="14dp"
+                                app:expandable_spinner_size="32dp" />
+
+                            <com.skydoves.expandablelayout.ExpandableLayout
+                                android:id="@+id/expandable3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/bg_expandable"
+                                android:padding="10dp"
+                                app:expandable_duration="300"
+                                app:expandable_isExpanded="false"
+                                app:expandable_parentLayout="@layout/expandable_parent"
+                                app:expandable_secondLayout="@layout/expandable_detail"
+                                app:expandable_showSpinner="true"
+                                app:expandable_spinner="@drawable/ic_arrow_down"
+                                app:expandable_spinner_animate="true"
+                                app:expandable_spinner_gravity="end"
+                                app:expandable_spinner_margin="14dp"
+                                app:expandable_spinner_size="32dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

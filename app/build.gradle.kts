@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -55,23 +56,36 @@ dependencies {
     //Paging
     implementation(libs.androidx.paging.runtime.ktx)
 
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+
+    //ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.livedata)
+
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
-
-    //Coroutines
-    implementation (libs.kotlinx.coroutines.core)
-    implementation (libs.kotlinx.coroutines.android)
-
-    //Coroutine Lifecycle Scopes
-    implementation (libs.androidx.lifecycle.viewmodel.ktx)
-    implementation (libs.androidx.lifecycle.runtime.ktx)
+    //interceptor
+    implementation(libs.logging.interceptor)
 
     //Dagger-hilt
     implementation (libs.hilt.android)
     kapt (libs.hilt.android.compiler)
 
+    //Navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    //ExpandableLayout
+    implementation (libs.expandablelayout)
+
     //Coil
     implementation(libs.coil)
+
+    //Glide
+    implementation (libs.glide)
+    annotationProcessor (libs.glide.compiler)
+
 }
