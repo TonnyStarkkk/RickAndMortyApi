@@ -21,7 +21,7 @@ class CharacterDetailFragment : Fragment() {
 
     private var _binding: FragmentCharacterDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CharacterViewModel by viewModels()
+    private val viewModel: CharacterDetailViewModel by viewModels()
     private val args: CharacterDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -39,7 +39,7 @@ class CharacterDetailFragment : Fragment() {
 
     private fun initListData() = with(binding) {
         Log.e("TAG", "initListData: ${args.id}", )
-        viewModel.getCharacters(args.id).observe(viewLifecycleOwner) { resource ->
+        viewModel.getCharacter(args.id).observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Success -> {
                     characterNameTextView.text = resource.data.name

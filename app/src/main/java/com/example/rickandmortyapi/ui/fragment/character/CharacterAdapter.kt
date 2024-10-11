@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.rickandmortyapi.R
@@ -32,7 +33,9 @@ class CharacterAdapter(
                     else -> R.drawable.ic_circle_gray
                 }
             )
-
+            itemView.setOnClickListener {
+                onItemClick.onClick(character)
+            }
         }
     }
 
@@ -48,9 +51,6 @@ class CharacterAdapter(
         getItem(position)?.let {
             holder.onBind(it)
         }
-        holder.itemView.setOnClickListener {
-            getItem(position)?.let { it1 -> onItemClick.onClick(it1) }
-        }
     }
 
     companion object {
@@ -62,7 +62,6 @@ class CharacterAdapter(
             override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
 }

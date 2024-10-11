@@ -42,32 +42,30 @@ class CharacterFragment : Fragment(), OnClick {
 
     private fun setupObserve() {
         viewModel.getCharacters().observe(viewLifecycleOwner) { resource ->
+            binding.pgCharacter.visibility = if (resource is Resource.Loading) View.VISIBLE else View.GONE
             when (resource) {
                 is Resource.Success -> viewLifecycleOwner.lifecycleScope.launch {
-                    binding.pgCharacter.visibility = View.GONE
                     adapter.submitData(resource.data)
                 }
 
                 is Resource.Error -> {
-                    binding.pgCharacter.visibility = View.VISIBLE
                     Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is Resource.Loading -> {
-                    binding.pgCharacter.visibility = View.VISIBLE
-                }
+                else -> { View.VISIBLE }
             }
         }
     }
 
-    private fun initialize() {
-        adapter = CharacterAdapter(this@CharacterFragment)
-        binding.rvCharacter.adapter = adapter
-    }
+private fun initialize() {
+    adapter = CharacterAdapter(this@CharacterFragment)
+    binding.rvCharacter.adapter = adapter
+}
 
-    override fun onClick(model: Character) {
-        val action = CharacterFragmentDirections.actionCharacterFragmentToCharacterDetailFragment(model.id)
-        Log.e("TAG", "onClick: $model.id",)
-        findNavController().navigate(action)
-    }
+override fun onClick(model: Character) {
+    val action =
+        CharacterFragmentDirections.actionCharacterFragmentToCharacterDetailFragment(model.id)
+    Log.e("TAG", "onClick: $model.id")
+    findNavController().navigate(action)
+}
 }
