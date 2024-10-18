@@ -15,13 +15,13 @@ import com.example.rickandmortyapi.databinding.FragmentCharacterDetailBinding
 import com.example.rickandmortyapi.ui.fragment.character.CharacterViewModel
 import com.example.rickandmortyapi.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class CharacterDetailFragment : Fragment() {
 
     private var _binding: FragmentCharacterDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CharacterDetailViewModel by viewModels()
+    private val viewModel: CharacterDetailViewModel by viewModel()
     private val args: CharacterDetailFragmentArgs by navArgs()
 
     override fun onCreateView(

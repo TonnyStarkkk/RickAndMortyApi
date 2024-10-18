@@ -8,7 +8,6 @@ import com.example.rickandmortyapi.R
 import com.example.rickandmortyapi.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy {

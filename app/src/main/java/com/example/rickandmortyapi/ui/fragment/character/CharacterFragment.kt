@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyapi.R
@@ -15,14 +14,17 @@ import com.example.rickandmortyapi.data.model.characters.Character
 import com.example.rickandmortyapi.databinding.FragmentCharacterBinding
 import com.example.rickandmortyapi.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class CharacterFragment : Fragment(), OnClick {
 
     private var _binding: FragmentCharacterBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CharacterViewModel by viewModels()
+    private val viewModel: CharacterViewModel by viewModel()
     private lateinit var adapter: CharacterAdapter
 
 
@@ -42,7 +44,8 @@ class CharacterFragment : Fragment(), OnClick {
 
     private fun setupObserve() {
         viewModel.getCharacters().observe(viewLifecycleOwner) { resource ->
-            binding.pgCharacter.visibility = if (resource is Resource.Loading) View.VISIBLE else View.GONE
+            binding.pgCharacter.visibility =
+                if (resource is Resource.Loading) View.VISIBLE else View.GONE
             when (resource) {
                 is Resource.Success -> viewLifecycleOwner.lifecycleScope.launch {
                     adapter.submitData(resource.data)
@@ -52,20 +55,22 @@ class CharacterFragment : Fragment(), OnClick {
                     Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
                 }
 
-                else -> { View.VISIBLE }
+                else -> {
+                    View.VISIBLE
+                }
             }
         }
     }
 
-private fun initialize() {
-    adapter = CharacterAdapter(this@CharacterFragment)
-    binding.rvCharacter.adapter = adapter
-}
+    private fun initialize() {
+        adapter = CharacterAdapter(this@CharacterFragment)
+        binding.rvCharacter.adapter = adapter
+    }
 
-override fun onClick(model: Character) {
-    val action =
-        CharacterFragmentDirections.actionCharacterFragmentToCharacterDetailFragment(model.id)
-    Log.e("TAG", "onClick: $model.id")
-    findNavController().navigate(action)
-}
+    override fun onClick(model: Character) {
+        val action =
+            CharacterFragmentDirections.actionCharacterFragmentToCharacterDetailFragment(model.id)
+        Log.e("TAG", "onClick: $model.id")
+        findNavController().navigate(action)
+    }
 }
