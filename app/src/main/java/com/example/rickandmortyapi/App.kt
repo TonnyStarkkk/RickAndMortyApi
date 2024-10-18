@@ -1,7 +1,20 @@
 package com.example.rickandmortyapi
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.example.rickandmortyapi.data.di.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
-@HiltAndroidApp
-class App: Application()
+class App: Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@App)
+            androidLogger(Level.INFO)
+            modules(appModule)
+        }
+    }
+}

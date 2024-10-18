@@ -88,4 +88,7 @@ dependencies {
     implementation (libs.glide)
     annotationProcessor (libs.glide.compiler)
 
+    //Koin
+    implementation(libs.koin.android)
+
 }
