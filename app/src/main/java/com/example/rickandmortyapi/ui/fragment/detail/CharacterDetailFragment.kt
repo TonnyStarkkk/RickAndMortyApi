@@ -1,21 +1,14 @@
 package com.example.rickandmortyapi.ui.fragment.detail
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.rickandmortyapi.R
 import com.example.rickandmortyapi.data.base.BaseFragment
 import com.example.rickandmortyapi.databinding.FragmentCharacterDetailBinding
-import com.example.rickandmortyapi.ui.fragment.character.CharacterViewModel
-import com.example.rickandmortyapi.utils.Resource
-import dagger.hilt.android.AndroidEntryPoint
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterDetailFragment : BaseFragment<FragmentCharacterDetailBinding, CharacterDetailViewModel>() {

@@ -1,24 +1,16 @@
 package com.example.rickandmortyapi.ui.fragment.character
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.rickandmortyapi.R
 import com.example.rickandmortyapi.data.base.BaseFragment
 import com.example.rickandmortyapi.data.model.characters.Character
 import com.example.rickandmortyapi.databinding.FragmentCharacterBinding
-import com.example.rickandmortyapi.utils.Resource
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterFragment : BaseFragment<FragmentCharacterBinding, CharacterViewModel>(), OnClick {

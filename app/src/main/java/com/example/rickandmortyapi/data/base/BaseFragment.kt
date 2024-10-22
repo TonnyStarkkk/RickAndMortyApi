@@ -36,25 +36,15 @@ abstract class BaseFragment<VB: ViewBinding, VM: ViewModel>: Fragment() {
     protected fun <T> observeData(liveData: LiveData<Resource<T>>, onSuccess: (T) -> Unit) {
         liveData.observe(viewLifecycleOwner) { resource ->
             when(resource) {
-                is Resource.Loading -> showLoading()
+                is Resource.Loading -> Resource.Loading<T>()
                 is Resource.Success -> {
-                    hideLoading()
                     resource.data?.let { onSuccess(it) }
                 }
                 is Resource.Error -> {
-                    hideLoading()
                     showError(resource.message)
                 }
             }
         }
-    }
-
-    protected open fun showLoading() {
-        // Override to show loading state
-    }
-
-    protected open fun hideLoading() {
-        // Override to hide loading state
     }
 
     protected open fun showError(message: String?) {
