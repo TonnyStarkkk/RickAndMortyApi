@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyapi.R
+import com.example.rickandmortyapi.data.base.BaseFragment
 import com.example.rickandmortyapi.data.model.characters.Character
 import com.example.rickandmortyapi.databinding.FragmentCharacterBinding
 import com.example.rickandmortyapi.utils.Resource
@@ -20,20 +21,17 @@ import kotlinx.coroutines.launch
 import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CharacterFragment : Fragment(), OnClick {
+class CharacterFragment : BaseFragment<FragmentCharacterBinding, CharacterViewModel>(), OnClick {
 
-    private var _binding: FragmentCharacterBinding? = null
-    private val binding get() = _binding!!
-    private val viewModel: CharacterViewModel by viewModel()
+    override val viewModel: CharacterViewModel by viewModel()
     private lateinit var adapter: CharacterAdapter
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCharacterBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentCharacterBinding {
+        return FragmentCharacterBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,34 +41,21 @@ class CharacterFragment : Fragment(), OnClick {
     }
 
     private fun setupObserve() {
-        viewModel.getCharacters().observe(viewLifecycleOwner) { resource ->
-            binding.pgCharacter.visibility =
-                if (resource is Resource.Loading) View.VISIBLE else View.GONE
-            when (resource) {
-                is Resource.Success -> viewLifecycleOwner.lifecycleScope.launch {
-                    adapter.submitData(resource.data)
-                }
-
-                is Resource.Error -> {
-                    Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
-                }
-
-                else -> {
-                    View.VISIBLE
-                }
+        observeData(viewModel.getCharacters()) { pagingData ->
+            lifecycleScope.launch {
+                adapter.submitData(pagingData)
             }
         }
     }
 
     private fun initialize() {
-        adapter = CharacterAdapter(this@CharacterFragment)
+        adapter = CharacterAdapter(this)
         binding.rvCharacter.adapter = adapter
     }
 
     override fun onClick(model: Character) {
         val action =
             CharacterFragmentDirections.actionCharacterFragmentToCharacterDetailFragment(model.id)
-        Log.e("TAG", "onClick: $model.id")
         findNavController().navigate(action)
     }
 }
