@@ -11,25 +11,24 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.rickandmortyapi.R
+import com.example.rickandmortyapi.data.base.BaseFragment
 import com.example.rickandmortyapi.databinding.FragmentCharacterDetailBinding
 import com.example.rickandmortyapi.ui.fragment.character.CharacterViewModel
 import com.example.rickandmortyapi.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CharacterDetailFragment : Fragment() {
+class CharacterDetailFragment : BaseFragment<FragmentCharacterDetailBinding, CharacterDetailViewModel>() {
 
-    private var _binding: FragmentCharacterDetailBinding? = null
-    private val binding get() = _binding!!
-    private val viewModel: CharacterDetailViewModel by viewModel()
+    override val viewModel: CharacterDetailViewModel by viewModel()
     private val args: CharacterDetailFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCharacterDetailBinding.inflate(inflater, container, false)
-        return binding.root
+
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentCharacterDetailBinding {
+        return FragmentCharacterDetailBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,23 +36,15 @@ class CharacterDetailFragment : Fragment() {
         initListData()
     }
 
-    private fun initListData() = with(binding) {
-        Log.e("TAG", "initListData: ${args.id}", )
-        viewModel.getCharacter(args.id).observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Success -> {
-                    characterNameTextView.text = resource.data.name
-                    characterStatusTextView.text = resource.data.status
-                    characterGenderTextView.text = resource.data.gender
-                    lastKnownLocationTextView.text = resource.data.location.name
-                    headerImageView.load(resource.data.image)
-                }
-                is Resource.Error -> {
-                    Log.e("TAG", "initListData: ${resource.message}", )
-                    Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
-                }
-                is Resource.Loading -> {
-                    //Show loading state
+    private fun initListData() {
+        observeData(viewModel.getCharacter(args.id)) { detail ->
+            binding.apply {
+                characterNameTextView.text = detail.name
+                characterStatusTextView.text = detail.status
+                characterGenderTextView.text = detail.gender
+                lastKnownLocationTextView.text = detail.location.name
+                headerImageView.load(detail.image) {
+                    crossfade(true)
                 }
             }
         }
